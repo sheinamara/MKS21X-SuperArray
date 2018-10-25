@@ -66,12 +66,16 @@ public class SuperArray{
     return "" + data[index];
   }
 
-/*
   // 6
-  public String set(int index, String desiredValue){
+  public String set(int index, String desiredValue){ // replaces the string so don't worry about shifting
     if (index < 0 || index >= size()){
       return null;
     }
-*/
+    String old = "" + data[index];
+    data[index] = desiredValue;
+    return old;
+  }
+
+// PHASE TWO
 
 }
