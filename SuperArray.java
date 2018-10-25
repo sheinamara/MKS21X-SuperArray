@@ -26,13 +26,14 @@ public class SuperArray{
   // 3 SANITY CHECK DONE
   public boolean add(String input){
     if (size == data.length){
-      return false;
+      resize(); // added a later private resizing method from phase 2
+      // return false;
     }
-    else{
-      data[size] = input;
-      size ++;
-      return true;
-    }
+    // else{
+    data[size] = input;
+    size ++;
+    return true;
+    // }
   }
 
   // 4
@@ -77,12 +78,17 @@ public class SuperArray{
   }
 
 // PHASE TWO
-  // 7
+  // 7 SANITY CHECK DONE
   private void resize(){
     String[] resizedData;
     resizedData = new String[data.length * 2 + 1];
     for (int i = 0; i < data.length - 1; i++){ // loop through and add original values
       resizedData[i] = data[i];
     }
+    data = resizedData; // THIS SEEMS SUS
   }
+
+// PHASE THREE
+  // 8
+
 }
