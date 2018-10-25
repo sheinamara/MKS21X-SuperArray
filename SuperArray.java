@@ -77,5 +77,12 @@ public class SuperArray{
   }
 
 // PHASE TWO
-
+  // 7
+  private void resize(){
+    String[] resizedData;
+    resizedData = new String[data.length * 2 + 1];
+    for (int i = 0; i < data.length - 1; i++){ // loop through and add original values
+      resizedData[i] = data[i];
+    }
+  }
 }
