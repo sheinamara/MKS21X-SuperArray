@@ -90,5 +90,36 @@ public class SuperArray{
 
 // PHASE THREE
   // 8
+  public boolean contains(String target){
+    boolean marker = false;
+    for (int i = 0; i < size() - 1; i++){
+      if (data[i] == target){
+        marker = true;
+        return marker;
+      }
+      i = i + 1;
+    }
+    return marker;
+  }
+
+  // 9
+  public int indexOf(String target){
+    for (int i = 0; i < size() - 1; i++){
+      if (data[i] == target){
+        return i;
+      }
+    }
+    return -1;
+  }
+  public int lastIndexOf(String target){
+    for (int i = size() - 1; i > 0; i--){
+      if (data[i] == target){
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  // 10
 
 }
