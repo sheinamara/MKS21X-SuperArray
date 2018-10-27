@@ -120,6 +120,53 @@ public class SuperArray{
     return -1;
   }
 
-  // 10
+  // 10 SANITY CHECK DONE
+  public void add(int index, String element){
+    if (size() == data.length){
+      resize();
+    }
+    if (index < 0 || index >= size()){
+      System.out.println("Error");
+    }
+    String addedData[];
+    addedData = new String[data.length];
+    size ++;
+    for (int x = 0; x < index; x++){
+      addedData[x] = data[x];
+    }
+    addedData[index] = element;
+    for (int i = index + 1; i < size(); i++){
+      addedData[i] = data[i-1];
+    }
+    data = addedData;
+  }
 
+  // 11 SANITY CHECK DONE
+  public void remove(int index){
+    if (index < 0 || index >= size()){
+      System.out.println("Error");
+    }
+    String removedData[];
+    removedData = new String[data.length - 1];
+    size --;
+    for (int x = 0; x < index; x++){
+      removedData[x] = data[x];
+    }
+    for (int i = index; i < size(); i++){
+      removedData[i] = data[i+1];
+    }
+    data = removedData;
+  }
+
+
+  // 12 SANITY CHECK DONE
+  public boolean remove(String element){
+    if (indexOf(element) == -1){
+      return false;
+    }
+    else{
+      remove(indexOf(element));
+    }
+    return true;
+  }
 }
