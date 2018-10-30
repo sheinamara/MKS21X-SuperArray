@@ -6,18 +6,28 @@ public class SuperArray{
 
   // constructor
   public SuperArray(){
-    clear();
+    data = new String[10];
+  }
+  public SuperArray(int size){ // needed to add a second constructor to debug clear
+    data = new String[size];
   }
 
   // 1
   public void clear(){
-    size = 0;
-    data = new String[10];
+    this.size = 0;
+    this.data = new String[this.data.length];
   }
 
   // 2
   public int size(){
-    return size;
+    int count = 0;
+    for (int i = 0; i < this.data.length; i++){ // needed actual code lol
+      if (this.data[i] != null){
+        count = count + 1;
+      }
+    }
+    this.size = count;
+    return this.size;
   }
   public boolean isEmpty(){
     return size == 0;
@@ -30,8 +40,8 @@ public class SuperArray{
       // return false;
     }
     // else{
-    data[size] = input;
-    size ++;
+    this.size ++; // i think this switch will debug it ???
+    data[this.size] = input;
     return true;
     // }
   }
@@ -85,7 +95,7 @@ public class SuperArray{
     for (int i = 0; i < data.length - 1; i++){ // loop through and add original values
       resizedData[i] = data[i];
     }
-    data = resizedData; // THIS SEEMS SUS
+    this.data = resizedData; // THIS SEEMS SUS but works ???
   }
 
 // PHASE THREE
@@ -142,9 +152,9 @@ public class SuperArray{
   }
 
   // 11 SANITY CHECK DONE
-  public void remove(int index){
+  public String remove(int index){
     if (index < 0 || index >= size()){
-      System.out.println("Error");
+      return null;
     }
     String removedData[];
     removedData = new String[data.length - 1];
@@ -152,10 +162,12 @@ public class SuperArray{
     for (int x = 0; x < index; x++){
       removedData[x] = data[x];
     }
+    String whatIsRemoved = data[index];
     for (int i = index; i < size(); i++){
       removedData[i] = data[i+1];
     }
     data = removedData;
+    return whatIsRemoved;
   }
 
 
