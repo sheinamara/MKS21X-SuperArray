@@ -22,7 +22,7 @@ public class SuperArray{
   public int size(){
     int count = 0;
     for (int i = 0; i < this.data.length; i++){ // needed actual code lol
-      if (this.data[i] != null){
+      if (data[i] != null){
         count = count + 1;
       }
     }
@@ -40,8 +40,8 @@ public class SuperArray{
       // return false;
     }
     // else{
-    this.size ++; // i think this switch will debug it ???
-    data[this.size] = input;
+    size ++; // i think this switch will debug it ???
+    data[size] = input;
     return true;
     // }
   }
@@ -91,8 +91,8 @@ public class SuperArray{
   // 7 SANITY CHECK DONE
   private void resize(){
     String[] resizedData;
-    resizedData = new String[data.length * 2 + 1];
-    for (int i = 0; i < data.length - 1; i++){ // loop through and add original values
+    resizedData = new String[this.data.length * 2]; // changed to include size instead
+    for (int i = 0; i < this.size(); i++){ // loop through and add original values
       resizedData[i] = data[i];
     }
     this.data = resizedData; // THIS SEEMS SUS but works ???
