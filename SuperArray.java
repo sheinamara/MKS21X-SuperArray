@@ -42,16 +42,16 @@ public class SuperArray{
 
   // 3 SANITY CHECK DONE
   public boolean add(String input){
-    if (this.size() == this.data.length){
-      this.resize(); // added a later private resizing method from phase 2
-      this.data[this.size()] = input;
-      return true;
-    }
     if (this.size() < this.data.length){
       this.data[this.size()] = input;
-      return true;
+      size ++;
     }
-    return false;
+    else{
+      this.resize();
+      this.data[this.size()] = input;
+      size ++;
+    }
+    return true;
   }
 
   // 4
@@ -152,42 +152,48 @@ public class SuperArray{
 
   // 10 SANITY CHECK DONE
   public void add(int index, String element){
-    if (size() == data.length){
-      resize();
+    if (index < 0 || index >= this.size()){
+      if (this.size() == 0){
+        this.resize();
+      }
+      else{
+        throw new IndexOutOfBoundsException("Check the index!!!");
+      }
     }
-    if (index < 0 || index >= size()){
-      System.out.println("Error");
+    else{
+      String addedData[];
+      addedData = new String[data.length + 1];
+      size ++;
+      for (int x = 0; x < index; x++){
+        addedData[x] = data[x];
+      }
+      addedData[index] = element;
+      for (int i = index + 1; i < size(); i++){
+        addedData[i] = data[i-1];
+      }
+      data = addedData;
     }
-    String addedData[];
-    addedData = new String[data.length];
-    size ++;
-    for (int x = 0; x < index; x++){
-      addedData[x] = data[x];
-    }
-    addedData[index] = element;
-    for (int i = index + 1; i < size(); i++){
-      addedData[i] = data[i-1];
-    }
-    data = addedData;
   }
 
   // 11 SANITY CHECK DONE
   public String remove(int index){
     if (index < 0 || index >= size()){
-      return null;
+      throw new IndexOutOfBoundsException("Check the index!!!");
     }
-    String removedData[];
-    removedData = new String[data.length - 1];
-    size --;
-    for (int x = 0; x < index; x++){
-      removedData[x] = data[x];
+    else{
+      String removedData[];
+      removedData = new String[data.length - 1];
+      for (int x = 0; x < index; x++){
+        removedData[x] = data[x];
+      }
+      String whatIsRemoved = data[index];
+      for (int i = index; i < size(); i++){
+        removedData[i] = data[i+1];
+      }
+      data = removedData;
+      size --;
+      return whatIsRemoved;
     }
-    String whatIsRemoved = data[index];
-    for (int i = index; i < size(); i++){
-      removedData[i] = data[i+1];
-    }
-    data = removedData;
-    return whatIsRemoved;
   }
 
 
