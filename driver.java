@@ -1,97 +1,198 @@
-public class Driver{
-	public static void main(String[] args){
-    /**phase 2 testing start*/
-    System.out.println("Phase 2 testing, start!");
-    //testing resize()
-    SuperArray letters = new SuperArray();
+// DRIVER FROM TIMOTHY STANSBERRY
+public class Driver {
+  public static void main(String[] args) {
 
-    for (int x = 0; x < 20; x++){
-      System.out.println();
-			letters.add("a");
-      System.out.println("Size: " + letters.size());
-      System.out.println(letters);
-		} //array should now be filled to index 19
+    System.out.println("NOTE: IF SOMETHING TESTS, AND DOESN'T RETURN ANYTHING, ASSUME IT WORKS");
 
-    System.out.println();
-    System.out.println("Phase 2 testing, end");
-    /** phase 2 testing end*/
+    //Case 0
+    System.out.println("Instantianting Empty:");
+    SuperArray testy = new SuperArray(0);
+    System.out.println(testy.toStringDebug());
 
-    System.out.println();
-    System.out.println();
+    //Case 1
+    System.out.println("\n\nAdding only 3 items:");
+    for (int x = 0; x < 3; x ++) {
+      testy.add("" + x);
+    }
+    System.out.println(testy);
+    testy.clear();
 
-    /** phase 2 testing end*/
-    System.out.println("Phase 3 testing, start!");
-    System.out.println();
+    //Case 2
+    System.out.println("\n\nAdding 3000 Times:");
+    for (int x = 0; x < 3000; x ++) {
+      testy.add("test" + x);
+    }
+    System.out.println("Length should now be 3000:\n" + testy.size());
 
-    //testing contains()
-    SuperArray randomLetters = new SuperArray();
-    randomLetters.add("b");
-    randomLetters.add("f");
-    randomLetters.add("g");
-    randomLetters.add("c");
-    randomLetters.add("z");
+    //Case 3
+    System.out.println("\n\nRemoving 200 Items:");
+    for (int x = 2999; x > 2799; x --) {
+      testy.remove(x);
+    }
+    System.out.println("Length should now be 2800:\n" + testy.size());
 
-    System.out.println(randomLetters); //should print [b,f,g,c,z]
+    //Case 4
+    System.out.println("\n\nRemoving 200, and checking return values:");
+    for(int x = 0; x < 200; x ++) {
+      if (! testy.remove(0).equals("test" + x)) {
+        throw new RuntimeException("Something has gone wrong, this test failed.");
+      }
+    }
+    System.out.println("Congrats! No errors. Length should now be 2600:\n" + testy.size());
+    testy.clear();
 
-    if (randomLetters.contains("a")){
-      System.out.println("a is in the array");
+    //Case 5
+    int c = 0;
+    try {
+      SuperArray seven = new SuperArray(-5);
+    } catch (IllegalArgumentException e) {
+      //System.out.println("Failed to make a SuperArray of size -5 (probably a good thing!)");
+      c++;
+    }
+    try {
+      testy.get(6);
+    } catch (IndexOutOfBoundsException e) {
+      //System.out.println("Failed to get item at too high an index");
+      c++;
+    }
+    try {
+      testy.get(-1);
+    } catch (IndexOutOfBoundsException e) {
+      //System.out.println("Failed to get item at negative index");
+      c++;
+    }
+    //Adding five integers to testy
+    for (int i = 0; i < 5; i++) {
+      testy.add(Integer.toString(i));
+    }
+    try {
+      testy.set(5, "lol");
+    } catch (IndexOutOfBoundsException e) {
+      //System.out.println("Failed to set value at too high an index");
+      c++;
+    }
+    try {
+      testy.set(-1, "yee");
+    } catch (IndexOutOfBoundsException e) {
+      //System.out.println("Failed to set value at negative index");
+      c++;
+    }
+    try {
+      testy.add(6, "lol");
+    } catch (IndexOutOfBoundsException e) {
+      //System.out.println("Failed to add value at too high an index");
+      c++;
+    }
+    try {
+      testy.add(-1, "yee");
+    } catch (IndexOutOfBoundsException e) {
+      //System.out.println("Failed to add value at negative index");
+      c++;
+    }
+    try {
+      testy.remove(6);
+    } catch (IndexOutOfBoundsException e) {
+      //System.out.println("Failed to remove value at too high an index");
+      c++;
+    }
+    try {
+      testy.remove(-1);
+    } catch (IndexOutOfBoundsException e) {
+      //System.out.println("Failed to remove value at negative index");
+      c++;
+    }
+    if (c == 9) {
+      System.out.println("All exceptions successfully caught");
     } else {
-      System.out.println("a is not in the array");
-    } //should print "a is not in the array"
+      System.out.println("c = "+c);
+    }
+    testy.clear();
 
-    if (randomLetters.contains("c")){
-      System.out.println("c is in the array");
-    } else {
-      System.out.println("c is not in the array");
-    } //should print "c is in the array"
+    //Case 6
+    System.out.println("Adding to 0 and using size() a few times:");
+    testy.add(0, "test1");
+    System.out.println(testy.size());
+    testy.add(0, "test2");
+    System.out.println(testy.size());
+    testy.add(0, "test3");
+    System.out.println(testy.size());
+    testy.clear();
 
-    System.out.println();
+    //Case 7
+    System.out.println("Testing indexOf Many Times(if there is nothing printed, you're good to go!):");
+    testy.add("a");
+    testy.add("a");
+    boolean case7 = true;
+    for (int i = 0; i < 100; i++) {
+      if (testy.indexOf("a") != 0) {
+        case7 = false;
+      }
+    }
+    if (!case7) {
+      System.out.println("Your indexOf isn't working");
+    }
 
-    //testing indexOf() and lastIndexOf()
-    randomLetters.add("b");
-    randomLetters.add("z");
-    System.out.println(randomLetters); //should print [b,f,g,c,z,b,z]
+    //Case 8
+    System.out.println("Testing LastIndex Many Times(if there is nothing printed, you're good to go!):");
+    boolean case8 = true;
+    for (int i = 0; i < 100; i++) {
+      if (testy.lastIndexOf("a") != 1) {
+        case8 = false;
+      }
+    }
+    if (!case8) {
+      System.out.println("Your lastIndexOf isn't working");
+    }
+    testy.clear();
 
-    System.out.println("The first occurance of b is at: " + randomLetters.indexOf("b")); //should print 0
-    System.out.println("The first occurance of f is at: " + randomLetters.indexOf("f")); //should print 1
-    System.out.println("The first occurance of g is at: " + randomLetters.indexOf("g")); //should print 2
-    System.out.println("The first occurance of c is at: " + randomLetters.indexOf("c")); //should print 3
-    System.out.println("The first occurance of z is at: " + randomLetters.indexOf("z")); //should print 4
-    System.out.println("The first occurance of j is at: " + randomLetters.indexOf("j")); //should print -1
 
-    System.out.println();
+    //Case 9
+    System.out.println("\n\nTesting the speed and functionality of add:");
+    for (int x = 0; x < 100; x ++) {
+      testy.add("placeHolder");
+    }
+    for (int x = 0; x < 100; x ++) {
+      try{
+      testy.set(x, "jediNumber" + x);
+      }
+      catch(IndexOutOfBoundsException e) {
+        System.out.println("An Index error was given here, check your set function.");
+      }
+    }
+    System.out.println("If no errors were given, and the length is 100, you're good to go! Length:\n" + testy.size());
 
-    System.out.println("The last occurance of b is at: " + randomLetters.lastIndexOf("b")); //should print 5
-    System.out.println("The last occurance of f is at: " + randomLetters.lastIndexOf("f")); //should print 1
-    System.out.println("The last occurance of g is at: " + randomLetters.lastIndexOf("g")); //should print 2
-    System.out.println("The last occurance of c is at: " + randomLetters.lastIndexOf("c")); //should print 3
-    System.out.println("The last occurance of z is at: " + randomLetters.lastIndexOf("z")); //should print 6
-    System.out.println("The last occurance of j is at: " + randomLetters.lastIndexOf("j")); //should print -1
+    //Case 10
+    System.out.println ("Testing add and clear(if there is nothing printed, you're good to go!):");
+    for (int i = 0; i < 1500; i++) {
+      testy.add("churros");
+    }
+    testy.clear();
+    for (int i = 0; i < 1500; i++) {
+      testy.add("seven");
+    }
+    if (testy.get(1499).equals("churros")) {
+      System.out.println("Your clear is messed up");
+    } else if (!testy.get(1499).equals("seven")) {
+      System.out.println("Your add seems to be faulty");
+    }
+    testy.clear();
 
-    System.out.println();
-
-    //testing add(int,String)
-    System.out.println(randomLetters);//should print [b,f,g,c,z,b,z]
-
-    randomLetters.add(2, "a");
-    System.out.println(randomLetters);//should print [b,f,a,g,c,z,b,z]
-    randomLetters.add(10, "a");//should print error
-
-    System.out.println();
-
-    //testing remove()
-    System.out.println(randomLetters);//should print [b,f,a,g,c,z,b,z]
-
-    System.out.println(randomLetters.remove(9));//should print null
-    System.out.println(randomLetters.remove(1));//should print f;
-    System.out.println(randomLetters);//should print [b,a,g,c,z,b,z]
-
-    System.out.println();
-    System.out.println(randomLetters.remove("d"));//should print false
-    System.out.println(randomLetters.remove("z"));//should print true
-    System.out.println(randomLetters);//should print [b,a,g,c,b,z]
-
-    System.out.println();
-    System.out.println("Phase 3 testing, end");
+    //Case 11
+    System.out.println("Testing a LOT of set commands(if there is nothing printed, you're good to go!):");
+    boolean case11 = true;
+    for (int i = 0; i < 530; i++) {
+      testy.add("Thanos");
+    }
+    for (int i = 0; i < 530; i++) {
+      testy.set(i, "was right");
+    }
+    for (int i = 0; i < 530; i++) {
+      if (!testy.get(i).equals("was right")) {
+        case11 = false;
+      }
+    }
+    if (!case11) {
+      System.out.println("Go fix your set because it's stupid right now");
+    }
   }
 }

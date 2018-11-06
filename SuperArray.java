@@ -13,6 +13,9 @@ public class SuperArray{
     data = new String[10];
   }
   public SuperArray(int size){ // needed to add a second constructor to debug clear
+    if (size < 0){
+      throw new IllegalArgumentException("How are we going to negative starting capacity...?");
+    }
     data = new String[size];
   }
 
@@ -25,10 +28,6 @@ public class SuperArray{
   // 2
   public int size(){
     int count = 0;
-    if (this.data.length == 0){
-      this.size = count;
-      return this.size();
-    }
     for (int i = 0; i < this.data.length; i++){ // needed actual code lol
       if (data[i] != null){
         count = count + 1;
@@ -73,7 +72,7 @@ public class SuperArray{
   }
   public String toStringDebug(){
     // we cannot just say return "" + data or it will return the address
-    if (this.size() == 0){
+    if (this.data.length == 0){
       return "[]";
     }
     String theAmazingArray = "["; // the beginning of the array we need to print
@@ -106,7 +105,13 @@ public class SuperArray{
   // 7 SANITY CHECK DONE
   private void resize(){
     String[] resizedData;
-    resizedData = new String[this.data.length * 2]; // changed to include size instead
+    // have to add case about the original size being only 0; had this problem when trying to run driver
+    if (this.size() == 0){
+      resizedData = new String[10];
+    }
+    else{
+      resizedData = new String[this.data.length * 2]; // changed to include size instead
+    }
     for (int i = 0; i < this.size(); i++){ // loop through and add original values
       resizedData[i] = data[i];
     }
