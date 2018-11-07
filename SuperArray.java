@@ -2,6 +2,7 @@
 //  1. try indicating "this" versus "other" to make sure you understand things better
 //  2. read over directions over and over again in order to make sure you know what's going on
 //  3. add throws; you didn't have any...
+//  4. use JLDriver!!!
 public class SuperArray{
 // PHASE ONE
   // private fields so we don't have random things accessing it!
