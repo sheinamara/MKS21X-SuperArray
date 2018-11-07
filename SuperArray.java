@@ -61,11 +61,11 @@ public class SuperArray{
       return "[]";
     }
     String theRegularArray = "["; // the beginning of the array we need to print
-    for (int i = 0; i < size() - 1; i++){ // WE USE SIZE HERE
+    for (int i = 0; i < this.size() - 1; i++){ // WE USE SIZE HERE
       theRegularArray = theRegularArray + data[i] + ", "; // need to add the comma to separate the strings
     }
     if (size() > 0){
-      theRegularArray = theRegularArray + data[size() - 1];
+      theRegularArray = theRegularArray + data[this.size() - 1];
     }
     theRegularArray = theRegularArray + "]"; // close the array!
     return theRegularArray;
@@ -76,10 +76,10 @@ public class SuperArray{
       return "[]";
     }
     String theAmazingArray = "["; // the beginning of the array we need to print
-    for (int i = 0; i < data.length - 1; i++){ // WE USE BUILT-IN METHOD TO GET THE NULLS
+    for (int i = 0; i < this.data.length - 1; i++){ // WE USE BUILT-IN METHOD TO GET THE NULLS
       theAmazingArray = theAmazingArray + data[i] + ", "; // need to add the comma to separate the strings
     }
-    theAmazingArray = theAmazingArray + data[data.length - 1] + "]"; // close the array!
+    theAmazingArray = theAmazingArray + data[this.data.length - 1] + "]"; // close the array!
     return theAmazingArray;
   }
 
@@ -93,7 +93,7 @@ public class SuperArray{
 
   // 6
   public String set(int index, String desiredValue){ // replaces the string so don't worry about shifting
-    if (index < 0 || index >= size()){
+    if (index < 0 || index >= this.size()){
       throw new IndexOutOfBoundsException("Check the index! Is this valid?");
     }
     String old = "" + this.data[index];
@@ -122,7 +122,7 @@ public class SuperArray{
   // 8
   public boolean contains(String target){
     boolean marker = false;
-    for (int i = 0; i < size() - 1; i++){
+    for (int i = 0; i < this.size() - 1; i++){
       if (data[i] == target){
         marker = true;
         return marker;
@@ -134,7 +134,7 @@ public class SuperArray{
 
   // 9
   public int indexOf(String target){
-    for (int i = 0; i < size() - 1; i++){
+    for (int i = 0; i < this.size() - 1; i++){
       if (data[i] == target){
         return i;
       }
@@ -142,7 +142,7 @@ public class SuperArray{
     return -1;
   }
   public int lastIndexOf(String target){
-    for (int i = size() - 1; i > 0; i--){
+    for (int i = this.size() - 1; i > 0; i--){
       if (data[i] == target){
         return i;
       }
@@ -152,48 +152,65 @@ public class SuperArray{
 
   // 10 SANITY CHECK DONE
   public void add(int index, String element){
-    if (index < 0 || index >= this.size()){
-      if (this.size() == 0){
+    if (index < 0 || index > this.size()){
+      throw new IndexOutOfBoundsException("Check the index!!!");
+    }
+    if (this.data.length == this.size()){
         this.resize();
+    }
+    for (int i = size(); i > -1; i--){
+      if (i == index){
+        data[i] = element;
       }
-      else{
-        throw new IndexOutOfBoundsException("Check the index!!!");
+      if (i > index){
+        data[i] = data[i - 1];
       }
     }
-    else{
-      String addedData[];
-      addedData = new String[data.length + 1];
-      size ++;
-      for (int x = 0; x < index; x++){
-        addedData[x] = data[x];
-      }
-      addedData[index] = element;
-      for (int i = index + 1; i < size(); i++){
-        addedData[i] = data[i-1];
-      }
-      data = addedData;
+    size++;
+    // GOING TO TRY METHOD WITHOUT A NEW ARRAY
+    /*
+    String addedData[];
+    addedData = new String[this.data.length + 1];
+    size ++;
+    for (int x = 0; x < index; x++){
+      addedData[x] = data[x];
     }
+    addedData[index] = element;
+    for (int i = index + 1; i < this.size(); i++){
+      addedData[i] = data[i-1];
+    }
+    data = addedData;
+    */
   }
 
   // 11 SANITY CHECK DONE
   public String remove(int index){
-    if (index < 0 || index >= size()){
+    if (index < 0 || index > this.size()){
       throw new IndexOutOfBoundsException("Check the index!!!");
     }
+    String whatIsRemoved = this.data[index];
+    for (int i = index; i < this.size(); i++){
+      data[i] = data[i+1];
+    }
+    size--;
+    return whatIsRemoved;
+    // INSPIRED BY THE WORKING CODE FOR ADD METHOD NOW, ATTEMPT TO MAKE THE SAME CHANGES TO THIS
+    /*
     else{
       String removedData[];
-      removedData = new String[data.length - 1];
+      removedData = new String[this.data.length - 1];
       for (int x = 0; x < index; x++){
         removedData[x] = data[x];
       }
-      String whatIsRemoved = data[index];
-      for (int i = index; i < size(); i++){
+      String whatIsRemoved = this.data[index];
+      for (int i = index; i < this.size(); i++){
         removedData[i] = data[i+1];
       }
       data = removedData;
       size --;
       return whatIsRemoved;
     }
+    */
   }
 
 
